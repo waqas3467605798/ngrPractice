@@ -7,10 +7,10 @@ import firebase from './Fire'
       constructor(){
           super();
           this.state = {
-            // firstName:'',          these commented object is saving through on change function
-            // secondName:'',
-            // age:'',
-            // message:'',
+            firstName:'',
+            secondName:'',
+            age:'',
+            message:'',
             objects:[],
             status:false,
             renderMsg:[],
@@ -39,6 +39,8 @@ save = ()=> {
   obj.firstName = this.state.firstName;
   obj.secondName = this.state.secondName;
   obj.age = this.state.age;
+  var msg = ['Detail of messages'];
+  obj.msg = msg;
   
   var key = firebase.database().ref('bioData').push().key
   obj.key = key
@@ -73,7 +75,6 @@ saveValue = ()=>{
   var message = this.state.message;
   var reqOjb = this.state.objects.find( (x)=>{return x.firstName === val}  )
   
-
   if('msg' in reqOjb){
     reqOjb.msg.push(message)
 
@@ -91,8 +92,11 @@ saveValue = ()=>{
     alert('Your message successfully saved..!')
     this.setState({message:''})
   }
+
+
+  
 // reqOjb.message.push(message)
-console.log(reqOjb)
+console.log(this.state.objects)
   // console.log(reqOjb.key)
   
 
@@ -106,10 +110,10 @@ getMessages = ()=>{
   var val = document.getElementById('selectMsg').value
   var reqOjb = this.state.objects.find( (x)=>{return x.firstName === val}  )
 
-  if('msg' in reqOjb){
+  if('msg' in reqOjb && reqOjb.msg.length > 1){
    var savedMsg = reqOjb.msg;
    this.setState({renderMsg: savedMsg, renderMstStatus:true, noData:null})
-   console.log(savedMsg)
+  //  console.log()
 
   }else {
     
@@ -118,6 +122,7 @@ getMessages = ()=>{
     console.log(noDataFound)
     
   }
+
 
 
 }
