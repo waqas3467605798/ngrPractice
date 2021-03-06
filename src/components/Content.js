@@ -22,6 +22,15 @@ import firebase from './Fire'
 
 
 
+      componentDidMount(){
+        firebase.database().ref('bioData').on('child_added' , (data)=> { 
+          this.state.objects.push(data.val())
+      
+        }  ) 
+      }
+      
+
+
 
 changeHandler = (e) => {
 this.setState({ 
@@ -48,7 +57,8 @@ save = ()=> {
   alert('saved successfully')
  this.setState({firstName:'', secondName:'',age:''}) 
 
- console.log(obj)
+//  console.log(obj)
+ 
 }
 
 
@@ -57,23 +67,22 @@ save = ()=> {
 
 getData = ()=>{
   // firebase.database().ref('bioData').on('child_added' , (data)=> { console.log(data.val())}  )
-this.setState({status:true})
+this.setState({status:true})        //As status true, the render function will run again
 }
 
 
-componentDidMount(){
-  firebase.database().ref('bioData').on('child_added' , (data)=> { 
-    this.state.objects.push(data.val())
-
-  }  ) 
-}
 
 
 
 saveValue = ()=>{
-  var val = document.getElementById('selected').value
+  // var val = document.getElementById('selected').value
+  // var reqOjb = this.state.objects.find( (x)=>{return x.firstName === val}  )
+ 
+  var objIndex = document.getElementById('selected_save').selectedIndex
+  var reqOjb = this.state.objects[objIndex]
+
+
   var message = this.state.message;
-  var reqOjb = this.state.objects.find( (x)=>{return x.firstName === val}  )
   
   if('msg' in reqOjb){
     reqOjb.msg.push(message)
@@ -94,11 +103,6 @@ saveValue = ()=>{
   }
 
 
-  
-// reqOjb.message.push(message)
-console.log(this.state.objects)
-  // console.log(reqOjb.key)
-  
 
 
 }
@@ -107,15 +111,20 @@ console.log(this.state.objects)
 
 
 getMessages = ()=>{
-  var val = document.getElementById('selectMsg').value
-  var reqOjb = this.state.objects.find( (x)=>{return x.firstName === val}  )
+  // var val = document.getElementById('selectMsg').value
+  // var reqOjb = this.state.objects.find( (x)=>{return x.firstName === val}  )
+
+  
+  var objIndex = document.getElementById('selectMsg').selectedIndex
+  var reqOjb = this.state.objects[objIndex]
 
   if('msg' in reqOjb && reqOjb.msg.length > 1){
    var savedMsg = reqOjb.msg;
    this.setState({renderMsg: savedMsg, renderMstStatus:true, noData:null})
-  //  console.log()
+  
 
-  }else {
+  }
+  else{
     
     var noDataFound = 'No data found'
     this.setState({noData: noDataFound, renderMstStatus:false})
@@ -128,11 +137,15 @@ getMessages = ()=>{
 }
 
 
+
+
   render(){
-    let obb = {name:'honda', color:'green', model:'2008', capacity:'1300cc'}
-    let {name,color,model,capacity} = obb
+    
     return (
+    
+    
     <div>
+    {/* Add new Account */}
     <h2>Add new Account</h2>
     <input type='text'  value={this.state.firstName} name='firstName' onChange={this.changeHandler} placeholder='First Name' />  <br/>
     <input type='text' value={this.state.secondName} name='secondName' onChange={this.changeHandler} placeholder='Second Name' /> <br/>
@@ -143,9 +156,11 @@ getMessages = ()=>{
 <br/><br/><br/><br/>
 
 
+
+      {/* Save messages */}
     <h2>To save more data</h2>
     <button onClick={this.getData}>Select Account</button> <br/>
-    <select id='selected'>  {this.state.objects.map(  (item,i)=>{ return <option key={i}>{item.firstName}</option>}  )}   </select>  <br/>
+    <select id='selected_save'>  {this.state.objects.map(  (item,i)=>{ return <option key={i}>{item.firstName}</option>}  )}   </select>  <br/>
     <input type='text' value={this.state.message} name='message' onChange={this.changeHandler} placeholder='Put the Message'/> <br/>
 
     <button onClick={this.saveValue}>save msg</button>
@@ -156,7 +171,7 @@ getMessages = ()=>{
     <br/><br/><br/><br/>
 
 
-
+     {/* Get Messages */}
     <h2>To Get saved data</h2>
     <button onClick={this.getData}>Select Account</button> <br/>
     <select id='selectMsg'>  {this.state.objects.map(  (item,i)=>{ return <option key={i}>{item.firstName}</option>}  )}   </select>  <br/>
@@ -171,7 +186,7 @@ getMessages = ()=>{
      <h4 className={this.state.noData === null ? 'display' : ''}>
         {this.state.noData}
      </h4>
-
+     
 
 
     </div>
