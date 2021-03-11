@@ -1,8 +1,10 @@
 import react, {Component} from 'react'
 import Content from './components/Content'
 import Header from './components/Header'
+import SaveData from './components/SaveData'
+import GetData from './components/GetData'
 import './App.css';
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 
 
 
@@ -15,7 +17,13 @@ import {BrowserRouter} from 'react-router-dom'
     <BrowserRouter>
     <div>
       <Header/>
-      <Content />
+
+      <Route exact path='/Content' component={Content}/>
+      <Route path='/SaveData' component={SaveData}/>
+      <Route path='/GetData' component={GetData}/>
+      {/* <Content />
+      <SaveData/>
+      <GetData/> */}
     </div>
     </BrowserRouter>
   );
