@@ -94,7 +94,7 @@ getMessages = ()=>{
 
 
     <div className={this.state.renderMstStatus === true ? '' : 'display'}>
-     <table>  {this.state.renderMsg.map(  (item,i)=>{return <tr> <td key={i}> <b>{i} - </b> {item}</td> </tr>}  )} </table>
+     <table>  {this.state.renderMsg.map(  (item,i)=>{return <tr> <td key={i}> <b>{i} - </b> {item}</td> <td><button> Delete </button> <button> Edit </button> </td>        </tr>}  )} </table>
     </div>
 
      <h4 className={this.state.noData === null ? 'display' : ''}>
