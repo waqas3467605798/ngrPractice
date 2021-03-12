@@ -85,7 +85,8 @@ getMessages = ()=>{
     
   
     {/* Get Messages */}
-    <h2 className='headings'>To Get saved data</h2>
+    <br/><br/><br/> 
+    <h2 className='headings'>Select Account and get your data</h2>
     <button className="waves-effect waves-light btn" onClick={this.getData} style={{width:'30%'}}>Select Account</button> <br/>
     <div className='selectWidth'><select className='browser-default' id='selectMsg'>  {this.state.objects.map(  (item,i)=>{ return <option key={i} className='browser-default'>{item.firstName}</option>}  )}   </select> </div> <br/>
     {/* <button onClick={this.getMessages}>Get Messages</button> */}
@@ -93,7 +94,7 @@ getMessages = ()=>{
 
 
     <div className={this.state.renderMstStatus === true ? '' : 'display'}>
-     <ul> {this.state.renderMsg.map(  (item,i)=>{return <li key={i}>{item}</li>}  )} </ul>
+     <table>  {this.state.renderMsg.map(  (item,i)=>{return <tr> <td key={i}> <b>{i} - </b> {item}</td> </tr>}  )} </table>
     </div>
 
      <h4 className={this.state.noData === null ? 'display' : ''}>
