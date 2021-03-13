@@ -8,14 +8,15 @@ import firebase from './Fire'
           super();
           this.state = {
             firstName:'',
-            secondName:'',
-            age:'',
+            // secondName:'',
+            // age:'',
             message:'',
             objects:[],
             status:false,
             renderMsg:[],
             renderMstStatus:false,
-            noData:null
+            noData:null,
+            closingStatus:false
             
           }
       }
@@ -71,7 +72,25 @@ getMessages = ()=>{
 
 
 
+  this.setState({closingStatus:true})
+
 }
+
+
+
+
+
+deleteReminder = (index)=> {
+var segName = document.getElementById('selectMsg').value
+var reqObj = this.state.objects.find(  (obj)=>{return obj.firstName === segName}  )
+reqObj.msg.splice(index,1)
+firebase.database().ref('bioData').child(reqObj.key).set(reqObj)
+this.componentDidMount()
+console.log(reqObj)
+
+}
+
+
 
 
 
@@ -88,19 +107,32 @@ getMessages = ()=>{
     <br/><br/><br/> 
     <h2 className='headings'>Select Account and get your data</h2>
     <button className="waves-effect waves-light btn" onClick={this.getData} style={{width:'30%'}}>Select Account</button> <br/>
-    <div className='selectWidth'><select className='browser-default' id='selectMsg'>  {this.state.objects.map(  (item,i)=>{ return <option key={i} className='browser-default'>{item.firstName}</option>}  )}   </select> </div> <br/>
+    <div className='selectWidth'><select className='browser-default' id='selectMsg'>  {this.state.objects.map(  (item,i)=>{ return <option key={i} value={item.firstName} className='browser-default'>{item.firstName}</option>}  )}   </select> </div> <br/>
     {/* <button onClick={this.getMessages}>Get Messages</button> */}
-    <button class="waves-effect waves-light btn" onClick={this.getMessages}>Get Messages</button>
+    <button className="waves-effect waves-light btn" onClick={this.getMessages}>Get Messages</button>
 
 
     <div className={this.state.renderMstStatus === true ? '' : 'display'}>
-     <table>  {this.state.renderMsg.map(  (item,i)=>{return <tr> <td key={i}> <b>{i} - </b> {item}</td> <td><button> Delete </button> <button> Edit </button> </td>        </tr>}  )} </table>
+     <table>{this.state.renderMsg.map(  (item,i)=>{return <tr key={i}><td><b>{i} - </b> {item}</td> <td> <button onClick={()=> this.deleteReminder(i)}> Delete </button><button> Edit </button> </td></tr>}  )}</table>
     </div>
 
      <h4 className={this.state.noData === null ? 'display' : ''}>
         {this.state.noData}
      </h4>
      
+
+
+
+{/* Botom end design */}
+<div className={this.state.closingStatus === false ? 'display' : ''} style={{backgroundColor:'lawngreen'}}>
+<hr/>
+<p style={{textAlign:'center'}}> <b>End</b></p>
+<hr/>
+</div>
+
+
+
+
 
 
     </div>

@@ -29,7 +29,7 @@ import {Link} from 'react-router-dom'
 
 
       <div id='div2'>
-     <Link to='/Content' style={{textDecoration:'none', marginRight:'50px'}}> Add Segment</Link>
+     <Link to='/' style={{textDecoration:'none', marginRight:'50px'}}> Add Segment</Link>
      <Link to='/SaveData' style={{textDecoration:'none', marginRight:'50px'}}> Save Data </Link>
      <Link to='/GetData' style={{textDecoration:'none', marginRight:'50px'}}> Reports </Link>
     
