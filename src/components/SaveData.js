@@ -26,11 +26,12 @@ import M from "materialize-css";
       componentDidMount(){
         firebase.database().ref('bioData').on('child_added' , (data)=> { 
           this.state.objects.push(data.val())
+
+          
       
         }  ) 
 
-
-        
+// setTimeout(( )=>{ this.setState({status:!this.state.status})},1000)
 
       }
       
@@ -102,7 +103,7 @@ saveValue = ()=>{
       {/* Save messages */}
       <br/><br/><br/>
     <h2 className='headings'>Click on select Account, write your message for selected account and press save button</h2>
-    <button className="waves-effect waves-light btn" style={{width:'30%'}} onClick={this.getData}>Select Account</button> <br/>
+    <button className="waves-effect waves-light btn" onClick={this.getData} style={{width:'30%'}}>Select Account</button> <br/>
     <div className='selectWidth'> <select className='browser-default' id='selected_save1'>  {this.state.objects.map(  (item,i)=>{ return <option key={i} className='browser-default'>{item.firstName}</option>}  )}   </select> </div> <br/>
     <input type='text' value={this.state.message} name='message' onChange={this.changeHandler} placeholder='Put the Message'/> <br/>
 

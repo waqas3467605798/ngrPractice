@@ -11,23 +11,23 @@ import firebase from './Fire'
             // secondName:'',
             // age:'',
             message:'',
-            objects:[],
-            status:false,
-            renderMsg:[],
-            renderMstStatus:false,
-            noData:null
+            // objects:[],
+            // status:false,
+            // renderMsg:[],
+            // renderMstStatus:false,
+            // noData:null
             
           }
       }
 
 
 
-      componentDidMount(){
-        firebase.database().ref('bioData').on('child_added' , (data)=> { 
-          this.state.objects.push(data.val())
+      // componentDidMount(){
+      //   firebase.database().ref('bioData').on('child_added' , (data)=> { 
+      //     this.state.objects.push(data.val())
       
-        }  ) 
-      }
+      //   }  ) 
+      // }
       
 
 
@@ -64,9 +64,9 @@ save = ()=> {
 
 
 
-getData = ()=>{
-this.setState({status:true})        //As status true, the render function will run again
-}
+// getData = ()=>{
+// this.setState({status:true})        //As status true, the render function will run again
+// }
 
 
 
@@ -89,7 +89,7 @@ this.setState({status:true})        //As status true, the render function will r
     {/* <input type='text' value={this.state.secondName} name='secondName' onChange={this.changeHandler} placeholder='Second Name' /> <br/>
     <input type='text' value={this.state.age} name='age' onChange={this.changeHandler} placeholder='Age' /><br/>  */}
     {/* <button onClick={this.save}>Save</button> */}
-    <button class="waves-effect waves-light btn" onClick={this.save}>Save</button>
+    <button className="waves-effect waves-light btn" onClick={this.save}>Save</button>
 
 
 

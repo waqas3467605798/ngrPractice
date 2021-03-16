@@ -32,6 +32,7 @@ import {Link} from 'react-router-dom'
      <Link to='/' style={{textDecoration:'none', marginRight:'50px'}}> Add Segment</Link>
      <Link to='/SaveData' style={{textDecoration:'none', marginRight:'50px'}}> Save Data </Link>
      <Link to='/GetData' style={{textDecoration:'none', marginRight:'50px'}}> Reports </Link>
+     <Link to='/ShowAll' style={{textDecoration:'none', marginRight:'50px'}}> Show All </Link>
     
       </div>
     

@@ -26,8 +26,11 @@ import firebase from './Fire'
       componentDidMount(){
         firebase.database().ref('bioData').on('child_added' , (data)=> { 
           this.state.objects.push(data.val())
+
       
         }  ) 
+
+        // setTimeout(()=>{ this.setState({status:!this.state.status})},1000)
       }
       
 
@@ -44,7 +47,8 @@ this.setState({
 
 getData = ()=>{
   // firebase.database().ref('bioData').on('child_added' , (data)=> { console.log(data.val())}  )
-this.setState({status:true})        //As status true, the render function will run again
+
+  this.setState({status:true})        //As status true, the render function will run again
 }
 
 
@@ -85,10 +89,16 @@ var segName = document.getElementById('selectMsg').value
 var reqObj = this.state.objects.find(  (obj)=>{return obj.firstName === segName}  )
 reqObj.msg.splice(index,1)
 firebase.database().ref('bioData').child(reqObj.key).set(reqObj)
-this.componentDidMount()
-console.log(reqObj)
+
+
 
 }
+
+
+// static getDerivedStateFromProps(props,state){
+// console.log(state.objects)
+// }
+
 
 
 
@@ -113,7 +123,7 @@ console.log(reqObj)
 
 
     <div className={this.state.renderMstStatus === true ? '' : 'display'}>
-     <table>{this.state.renderMsg.map(  (item,i)=>{return <tr key={i}><td><b>{i} - </b> {item}</td> <td> <button onClick={()=> this.deleteReminder(i)}> Delete </button><button> Edit </button> </td></tr>}  )}</table>
+     <table><tbody><tr><th>Description</th><th>Delet/edit</th></tr>{this.state.renderMsg.map(  (item,i)=>{return <tr key={i}><td id={`toDelete${i}`}><b>{i} - </b> {item}</td><td><button onClick={()=> this.deleteReminder(i)}> Delete </button><button> Edit </button></td></tr>}  )}</tbody></table>
     </div>
 
      <h4 className={this.state.noData === null ? 'display' : ''}>
