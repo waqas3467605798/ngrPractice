@@ -60,7 +60,7 @@ getMessages = ()=>{
   var objIndex = document.getElementById('selectMsg').selectedIndex
   var reqOjb = this.state.objects[objIndex]
 
-  if('msg' in reqOjb && reqOjb.msg.length > 1){
+  if('msg' in reqOjb){
    var savedMsg = reqOjb.msg;
    this.setState({renderMsg: savedMsg, renderMstStatus:true, noData:null})
   

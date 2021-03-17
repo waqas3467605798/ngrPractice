@@ -10,25 +10,9 @@ import firebase from './Fire'
             firstName:'',
             // secondName:'',
             // age:'',
-            message:'',
-            // objects:[],
-            // status:false,
-            // renderMsg:[],
-            // renderMstStatus:false,
-            // noData:null
-            
+            message:'',    
           }
       }
-
-
-
-      // componentDidMount(){
-      //   firebase.database().ref('bioData').on('child_added' , (data)=> { 
-      //     this.state.objects.push(data.val())
-      
-      //   }  ) 
-      // }
-      
 
 
 
@@ -48,9 +32,11 @@ save = ()=> {
   obj.firstName = this.state.firstName;
   // obj.secondName = this.state.secondName;
   // obj.age = this.state.age;
-  var msg = ['Below are detail of your saved messages'];
-  obj.msg = msg;
+
   
+  // Temporily coment
+  // var msg = ['below are your messages'];
+  // obj.msg = msg;
   var key = firebase.database().ref('bioData').push().key
   obj.key = key
   firebase.database().ref('bioData').child(key).set(obj)
@@ -59,17 +45,6 @@ save = ()=> {
 
  
 }
-
-
-
-
-
-// getData = ()=>{
-// this.setState({status:true})        //As status true, the render function will run again
-// }
-
-
-
 
 
 

@@ -63,11 +63,10 @@ saveValue = ()=>{
  
   var objIndex = document.getElementById('selected_save1').selectedIndex
   var reqOjb = this.state.objects[objIndex]
-
-
   var message = this.state.message;
-  
-  if('msg' in reqOjb){
+
+
+if('msg' in reqOjb){
     reqOjb.msg.push(message)
 
     firebase.database().ref('bioData').child(reqOjb.key).set(reqOjb)
@@ -76,15 +75,22 @@ saveValue = ()=>{
     this.setState({message:''})
 
   }else {
-    var msg = [];
-    msg.push(message)
-    reqOjb.msg = msg
-    firebase.database().ref('bioData').child(reqOjb.key).set(reqOjb)
-
-    alert('Your message successfully saved..!')
+    reqOjb.msg = []
+  reqOjb.msg.push(message)
+  firebase.database().ref('bioData').child(reqOjb.key).set(reqOjb)
+  alert('Your message successfully saved..!')
     this.setState({message:''})
   }
+
+
+
 }
+
+
+
+
+
+
 
 
 
