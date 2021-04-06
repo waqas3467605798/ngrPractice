@@ -86,20 +86,21 @@ getMessages = ()=>{
 
 deleteReminder = (index)=> {
 var segName = document.getElementById('selectMsg').value
+
 var reqObj = this.state.objects.find(  (obj)=>{return obj.firstName === segName}  )
 reqObj.msg.splice(index,1)
+
+
+
 firebase.database().ref('bioData').child(reqObj.key).set(reqObj)
 
+document.getElementById(`toDelete${index}`).style.color = 'red'
 
+alert('Deleted Successfully')
+
+// window.location.reload(false)
 
 }
-
-
-// static getDerivedStateFromProps(props,state){
-// console.log(state.objects)
-// }
-
-
 
 
 

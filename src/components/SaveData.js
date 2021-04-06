@@ -26,6 +26,7 @@ import M from "materialize-css";
       componentDidMount(){
         firebase.database().ref('bioData').on('child_added' , (data)=> { 
           this.state.objects.push(data.val())
+          // this.setState({objects:data.val()})
 
           
       
@@ -98,7 +99,7 @@ if('msg' in reqOjb){
 
 
   render(){
-    
+    // var {objects} = this.state
     return (
     
     

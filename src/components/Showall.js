@@ -60,7 +60,7 @@ getData = ()=>{
 
     
     <div className={this.state.status === false ? 'display' : ''}>
-    {this.state.objects.map((item,i)=>{return <div key={i}> <h4> {item.firstName} </h4>    {item.msg.map((it,ind)=>{ return <p key={ind}>{it}</p>})}     </div>          })}
+    {this.state.objects.map((item,i)=>{return <div key={i}> <h4><hr/>{item.firstName} </h4>    {item.msg.map((it,ind)=>{ return <p key={ind}>{it}</p>})}     </div>          })}
     </div>
 
 

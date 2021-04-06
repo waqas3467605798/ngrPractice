@@ -7,9 +7,11 @@ import firebase from './Fire'
       constructor(){
           super();
           this.state = {
-            firstName:'',
-            // secondName:'',
-            // age:'',
+            itemName:'',
+            costPrice:'',
+            partyName:'',
+            partyContact:'',
+            ownerName:'',
             message:'',    
           }
       }
@@ -27,24 +29,58 @@ this.setState({
 
 
 
-save = ()=> {
+saveItem = ()=> {
   let obj = {};
-  obj.firstName = this.state.firstName;
-  // obj.secondName = this.state.secondName;
+  obj.itemName = this.state.itemName;
+  obj.costPrice = Number(this.state.costPrice);
   // obj.age = this.state.age;
 
   
   // Temporily coment
   // var msg = ['below are your messages'];
   // obj.msg = msg;
-  var key = firebase.database().ref('bioData').push().key
+  var key = firebase.database().ref('itemList').push().key
   obj.key = key
-  firebase.database().ref('bioData').child(key).set(obj)
+  firebase.database().ref('itemList').child(key).set(obj)
   alert('saved successfully')
- this.setState({firstName:'', secondName:'',age:''}) 
+ this.setState({itemName:'', costPrice:'',age:''}) 
 
- 
+ console.log(obj)
+
 }
+
+
+
+
+
+
+
+saveParty = ()=> {
+  let partyObj = {};
+  partyObj.partyName = this.state.partyName;
+  partyObj.partyContact = this.state.partyContact;
+  partyObj.ownerName = this.state.ownerName;
+  // obj.costPrice = Number(this.state.costPrice);
+  // obj.age = this.state.age;
+  // Temporily coment
+  // var msg = ['below are your messages'];
+  // obj.msg = msg;
+  var key = firebase.database().ref('partyList').push().key
+  partyObj.key = key
+  firebase.database().ref('partyList').child(key).set(partyObj)
+  alert('saved successfully')
+ this.setState({itemName:'', costPrice:'',partyName:'', ownerName:'',partyContact:''}) 
+
+ console.log(partyObj)
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -57,14 +93,34 @@ save = ()=> {
     
     
     <div>
-    {/* Add new Account */}
+    {/* Add Item Name */}
     <br/><br/><br/>
-    <h2 className='headings'>Please write below your segment Name and Press Save button</h2> <br/>
-    <input type='text'  value={this.state.firstName} name='firstName' onChange={this.changeHandler} placeholder='Please Add your Segment Name' />  <br/>
-    {/* <input type='text' value={this.state.secondName} name='secondName' onChange={this.changeHandler} placeholder='Second Name' /> <br/>
-    <input type='text' value={this.state.age} name='age' onChange={this.changeHandler} placeholder='Age' /><br/>  */}
+    <h2 className='headings'>Add Item Name</h2>
+    <input type='text'  value={this.state.itemName} name='itemName' onChange={this.changeHandler} placeholder='Add Your Item Name with Brand' />  <br/>
+    <input type='text' value={this.state.costPrice} name='costPrice' onChange={this.changeHandler} placeholder='cost Price' /> <br/>
+    {/* <input type='text' value={this.state.age} name='age' onChange={this.changeHandler} placeholder='Age' /><br/>  */}
     {/* <button onClick={this.save}>Save</button> */}
-    <button className="waves-effect waves-light btn" onClick={this.save}>Save</button>
+    <button className="waves-effect waves-dark btn" onClick={this.saveItem}>Save</button>
+
+
+
+
+
+
+
+
+{/* Add Party */}
+<br/><br/><br/>
+    <h2 className='headings'>Add Party Name</h2>
+    <input type='text'  value={this.state.partyName} name='partyName' onChange={this.changeHandler} placeholder='Add Your Party Name' />  <br/>
+    <input type='text' value={this.state.partyContact} name='partyContact' onChange={this.changeHandler} placeholder='Contact Details' /> <br/>
+    <input type='text' value={this.state.ownerName} name='ownerName' onChange={this.changeHandler} placeholder='ownerName' /><br/> 
+    {/* <button onClick={this.save}>Save</button> */}
+    <button className="waves-effect waves-dark btn" onClick={this.saveParty}>Save</button>
+
+
+
+
 
 
 
