@@ -30,7 +30,7 @@ import {Link} from 'react-router-dom'
 
       <div id='div2'>
      <Link to='/' style={{textDecoration:'none', marginRight:'50px'}}> Create Account</Link>
-     <Link to='/SaveData' style={{textDecoration:'none', marginRight:'50px'}}> Save Data </Link>
+     <Link to='/Purchase' style={{textDecoration:'none', marginRight:'50px'}}> Purchase </Link>
      <Link to='/GetData' style={{textDecoration:'none', marginRight:'50px'}}> Reports </Link>
      <Link to='/ShowAll' style={{textDecoration:'none', marginRight:'50px'}}> Show All </Link>
     
