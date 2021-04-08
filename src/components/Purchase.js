@@ -67,33 +67,68 @@ saveValue = ()=>{
 var obj = {}
 obj.qty = Number(this.state.qty);
 obj.date = this.state.date;
-
-
 var itemObjIndex = document.getElementById('selected_save1').selectedIndex
 var reqObj = this.state.objects[itemObjIndex]
-
 obj.totalBill = reqObj.costPrice*Number(this.state.qty)     //multiplying by qty and price and saved in object with a property name of 'totolBill'
+var party = document.getElementById('selected_save2').value
+obj.partyName = party
 
 
-if('purchaseDate' in reqObj){
-  reqObj.purchaseDate.push(obj)
 
+var partyObjIndex = document.getElementById('selected_save2').selectedIndex
+var reqPartyObj = this.state.partyObjects[partyObjIndex]
+var partyLedgerObj = {}
+partyLedgerObj.qty = Number(this.state.qty);
+partyLedgerObj.date = this.state.date;
+partyLedgerObj.debit = reqObj.costPrice*Number(this.state.qty)
+partyLedgerObj.itemName = reqObj.itemName
+partyLedgerObj.perUnitCost = reqObj.costPrice
+
+
+
+//This code is for creation of purchaseData in itemList
+if('purchaseData' in reqObj){
+  reqObj.purchaseData.push(obj)
   firebase.database().ref('itemList').child(reqObj.key).set(reqObj)
 
-  alert('Your message successfully saved..!')
-
-
 }else {
-  reqObj.purchaseDate = []
-reqObj.purchaseDate.push(obj)
+
+reqObj.purchaseData = []
+reqObj.purchaseData.push(obj)
 firebase.database().ref('itemList').child(reqObj.key).set(reqObj)
-alert('Your message successfully saved..!')
+
+}
+
+
+
+
+
+
+
+//This code is for creation of Party Ledger in partyList
+if('ledger' in reqPartyObj){
+  reqPartyObj.ledger.push(partyLedgerObj)
+  firebase.database().ref('partyList').child(reqPartyObj.key).set(reqPartyObj)
+  
+}else{
+  reqPartyObj.ledger = []
+  reqPartyObj.ledger.push(partyLedgerObj)
+  firebase.database().ref('partyList').child(reqPartyObj.key).set(reqPartyObj)
   
 }
 
-  
 
+
+
+
+
+
+
+
+
+alert('Your message successfully saved..!')
 this.setState({qty:'',date:''})
+
 
 }
 
