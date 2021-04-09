@@ -4,7 +4,7 @@ import firebase from './Fire'
 import M from "materialize-css";
 
 
-  class Purchase extends Component{
+  class PurchaseReturn extends Component{
       constructor(){
           super();
           this.state = {
@@ -65,11 +65,11 @@ this.setState({status:true})        //As status true, the render function will r
 saveValue = ()=>{
 
 var obj = {}
-obj.qty = Number(this.state.qty);
+obj.qty = -Number(this.state.qty);
 obj.date = this.state.date;
 var itemObjIndex = document.getElementById('selected_save1').selectedIndex
 var reqObj = this.state.objects[itemObjIndex]
-obj.totalBill = reqObj.costPrice*Number(this.state.qty)     //multiplying by qty and price and saved in object with a property name of 'totolBill'
+obj.totalBill = -(reqObj.costPrice*Number(this.state.qty))     //multiplying by qty and price and saved in object with a property name of 'totolBill'
 var party = document.getElementById('selected_save2').value
 obj.partyName = party
 
@@ -80,7 +80,7 @@ var reqPartyObj = this.state.partyObjects[partyObjIndex]
 var partyLedgerObj = {}
 partyLedgerObj.qty = Number(this.state.qty);
 partyLedgerObj.date = this.state.date;
-partyLedgerObj.debit = reqObj.costPrice*Number(this.state.qty)
+partyLedgerObj.debit = -(reqObj.costPrice*Number(this.state.qty))
 partyLedgerObj.itemName = reqObj.itemName
 partyLedgerObj.perUnitCost = reqObj.costPrice
 
@@ -150,7 +150,7 @@ this.setState({qty:'',date:''})
     
     <div>
     
-    <h2 className='headings'>Add Purchases</h2>
+    <h2 className='headings'>Purchase Return</h2>
 
       {/* Save messages */}
       
@@ -178,4 +178,4 @@ this.setState({qty:'',date:''})
 }
 }
 
-export default Purchase;
+export default PurchaseReturn;
