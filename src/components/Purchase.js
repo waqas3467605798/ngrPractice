@@ -72,6 +72,7 @@ var reqObj = this.state.objects[itemObjIndex]
 obj.totalBill = reqObj.costPrice*Number(this.state.qty)     //multiplying by qty and price and saved in object with a property name of 'totolBill'
 var party = document.getElementById('selected_save2').value
 obj.partyName = party
+obj.costPrice = reqObj.costPrice
 
 
 

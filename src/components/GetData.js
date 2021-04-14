@@ -1,6 +1,7 @@
 import react, {Component} from 'react'
 import '../App.css';
-import {Link, Route} from 'react-router-dom'
+import {Link, Route,BrowserRouter} from 'react-router-dom'
+
 import firebase from './Fire'
 
 
@@ -11,8 +12,182 @@ import firebase from './Fire'
 
 
 
-
 class GetData extends Component{
+  constructor(){
+      super();
+      this.state = {
+        objects:[],
+        partyObjects:[]
+        
+      }
+  }
+
+
+render(){
+
+return (
+
+
+<div>
+  <br/> <br/>
+
+
+<div>
+<Link to='/GetData/Stock' style={{textDecoration:'none', marginRight:'50px'}}> Stocks </Link>
+<Link to='/GetData/Ledger' style={{textDecoration:'none', marginRight:'50px'}}> Ledger </Link>
+</div>
+
+<br/>
+
+<div>      
+<Route path='/GetData/Stock' component={Stock}/>
+<Route path='/GetData/Ledger' component={partyLedgers}/>
+</div>
+
+
+
+
+</div>
+
+);
+}
+}
+
+
+export default GetData;
+
+
+
+
+
+
+
+
+
+
+//the Stock component
+class Stock extends Component{
+  constructor(){
+      super();
+      this.state = {
+        objects:[],
+        partyObjects:[],
+        status:false,
+        itemLedger: [],
+        purchases:[],
+        renderPurchaseData:false,
+        noData:null
+        
+      }
+  }
+
+
+
+  componentDidMount(){
+
+    
+    firebase.database().ref('itemList').on('child_added' , (data)=> { 
+      this.state.objects.push(data.val())
+    }  )
+    
+    
+    firebase.database().ref('partyList').on('child_added' , (data)=> { 
+      this.state.partyObjects.push(data.val())
+    }  )
+
+
+
+  }
+  
+
+
+  
+  getData = ()=>{
+    this.setState({status:true})        //As status true, the render function will run again
+    }
+
+
+    itemLedger = ()=> {
+var objIndex = document.getElementById('selected_save3').selectedIndex
+var reqObj = this.state.objects[objIndex]
+
+
+
+if('purchaseData' in reqObj){
+  var purchasesData = reqObj.purchaseData;
+  this.setState({purchases: purchasesData, renderPurchaseData:true, noData:null})
+ 
+
+ }
+ else{
+   
+   var noDataFound = 'No data found'
+   this.setState({noData: noDataFound, renderPurchaseData:false})
+   console.log(noDataFound)
+   
+ }
+
+
+
+
+
+
+
+    }
+
+
+
+render(){
+
+return (
+
+
+<div>
+
+<button className="waves-effect waves-light btn" onClick={this.getData} style={{width:'30%'}}>Select item</button> <br/>
+<div className='selectWidth'> <select className='browser-default' id='selected_save3'>  {this.state.objects.map(  (item,i)=>{ return <option key={i} className='browser-default'>{item.itemName}</option>}  )}   </select> </div> <br/>
+<button className="waves-effect waves-light btn" onClick={this.itemLedger} style={{width:'30%'}}>Get Data</button> <br/>
+
+
+{/* in case of purchase data found */}
+<div className={this.state.renderPurchaseData === true ? '' : 'display'}>
+
+<table><thead><tr><th>Date</th><th>Qty</th><th>Rate</th><th>Total Cost</th><th>Party Name</th></tr></thead><tbody> {this.state.purchases.map(  (item,index)=>{return <tr key={index}><td>{item.date}</td><td>{item.qty}</td><td>{item.costPrice}</td><td>{item.totalBill}</td><td>{item.partyName}</td></tr>}  )}</tbody></table>
+
+</div>
+
+
+{/* in case of no data found of purchases */}
+<div className={this.state.noData === null ? 'display' : ''}>
+     <h4>
+        {this.state.noData}
+     </h4>
+     {/* <br/><hr/><button className="waves-effect waves-dark btn red" onClick={this.segmentDelete}>Delete this segment</button>
+     <p className="red-text">It will delete the Segment as well as all its stored messages/data</p> */}
+</div>
+
+
+
+
+
+
+</div>
+);
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+//Another Component of Party Ledgers
+class partyLedgers extends Component{
   constructor(){
       super();
       this.state = {
@@ -42,10 +217,7 @@ class GetData extends Component{
   
 
 
-  stockReport = ()=>{
-    console.log(this.state.objects)
-    console.log(this.state.partyObjects)
-  }
+  
 
 
 
@@ -57,58 +229,13 @@ return (
 
 <div>
 
-<button onClick={this.stockReport}>Stocks</button>
+<button onClick={this.stockReport}>Part Ledger</button>
 
 </div>
 );
 }
 }
 
-export default GetData;
-
-
-
-
-
-
-
-
-
-// class GetData extends Component{
-//   constructor(){
-//       super();
-//       this.state = {
-//         objects:[],
-//         partyObjects:[]
-        
-//       }
-//   }
-
-
-
-  
-
-
-
-// render(){
-
-// return (
-
-
-// <div>
-//   <br/> <br/>
-// <Link to='/Stock' style={{textDecoration:'none', marginRight:'50px'}}> Stocks </Link>
-  
-// <div>      
-// <Route path='/Stock' component={Stock}/>
-// </div>
-
-// <Stock/>
-
-// </div>
-// );
-// }
-// }
 
 
 
