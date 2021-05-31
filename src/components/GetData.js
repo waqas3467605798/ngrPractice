@@ -75,8 +75,10 @@ class Stock extends Component{
         status:false,
         itemLedger: [],
         purchases:[],
+        qtyTotal:[],
         renderPurchaseData:false,
-        noData:null
+        noData:null,
+        sum:[]
         
       }
   }
@@ -88,6 +90,8 @@ class Stock extends Component{
     
     firebase.database().ref('itemList').on('child_added' , (data)=> { 
       this.state.objects.push(data.val())
+      
+      // this.state.sum.push(data.val().purchaseData)
     }  )
     
     
@@ -97,13 +101,14 @@ class Stock extends Component{
 
 
 
+
   }
   
 
 
   
   getData = ()=>{
-    this.setState({status:true})        //As status true, the render function will run again
+    this.setState({status:true})        //As status true, the render function will run again - because of change in state
     }
 
 
@@ -133,6 +138,10 @@ if('purchaseData' in reqObj){
 
 
 
+// var newArr = reqObj.purchaseData.map( (item,ind) => {return item.qty} )
+// this.setState({qtyTotal:newArr.reduce((total,num)=>{return total+num},0)     })
+console.log(this.state.sum)
+
     }
 
 
@@ -152,7 +161,11 @@ return (
 {/* in case of purchase data found */}
 <div className={this.state.renderPurchaseData === true ? '' : 'display'}>
 
-<table><thead><tr><th>Date</th><th>Qty</th><th>Rate</th><th>Total Cost</th><th>Party Name</th></tr></thead><tbody> {this.state.purchases.map(  (item,index)=>{return <tr key={index}><td>{item.date}</td><td>{item.qty}</td><td>{item.costPrice}</td><td>{item.totalBill}</td><td>{item.partyName}</td></tr>}  )}</tbody></table>
+<table><thead><tr><th>Date</th><th>Qty</th><th>Rate</th><th>Total Cost</th><th>Party Name</th></tr></thead><tbody>{this.state.purchases.map(  (item,index)=>{return <tr key={index}><td>{item.date}</td><td>{item.qty}</td><td>{item.costPrice}</td><td>{item.totalBill}</td><td>{item.partyName}</td></tr>})}</tbody></table>
+
+
+{this.state.purchases.map(  (itm,indx)=>{ return <p>{itm.totalBill}</p>}  )}
+
 
 </div>
 
