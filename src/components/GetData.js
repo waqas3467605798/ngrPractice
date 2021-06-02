@@ -62,9 +62,6 @@ export default GetData;
 
 
 
-
-
-
 //the Stock component
 class Stock extends Component{
   constructor(){
@@ -78,7 +75,8 @@ class Stock extends Component{
         qtyTotal:[],
         renderPurchaseData:false,
         noData:null,
-        sum:[]
+        sum:[],
+        sumQty:[]
         
       }
   }
@@ -109,7 +107,8 @@ class Stock extends Component{
   
   getData = ()=>{
     this.setState({status:true})        //As status true, the render function will run again - because of change in state
-    }
+    this.setState({sum:[], sumQty:[]})  //As the render method will run again, so the array of sum and sumQty in state should be zero
+  }
 
 
     itemLedger = ()=> {
@@ -133,15 +132,7 @@ if('purchaseData' in reqObj){
  }
 
 
-
-
-
-
-
-// var newArr = reqObj.purchaseData.map( (item,ind) => {return item.qty} )
-// this.setState({qtyTotal:newArr.reduce((total,num)=>{return total+num},0)     })
-console.log(this.state.sum)
-
+this.setState({sum:[], sumQty:[]}) //As the render method will run again, so the array of sum and sumQty in state should be zero
     }
 
 
@@ -163,8 +154,22 @@ return (
 
 <table><thead><tr><th>Date</th><th>Qty</th><th>Rate</th><th>Total Cost</th><th>Party Name</th></tr></thead><tbody>{this.state.purchases.map(  (item,index)=>{return <tr key={index}><td>{item.date}</td><td>{item.qty}</td><td>{item.costPrice}</td><td>{item.totalBill}</td><td>{item.partyName}</td></tr>})}</tbody></table>
 
+{/* sum of Quantity of item */}
 
-{this.state.purchases.map(  (itm,indx)=>{ return <p>{itm.totalBill}</p>}  )}
+{this.state.purchases.map(  (itm,indx)=>{ return <span key={indx} style={{color:'white'}}>{this.state.sumQty.push(itm.qty)}</span>}  )}
+<b style={{color:'red'}}>Balance Quantity (Stock) = </b>
+<b style={{color:'red'}}>  {this.state.sumQty.reduce( (total,num)=>{return total+num}, 0 )  }  </b>
+
+
+<br/>
+
+{/* Sum of stock value in Rs. */}
+{this.state.purchases.map(  (itm,indx)=>{ return <span key={indx} style={{color:'white'}}>{this.state.sum.push(itm.totalBill)}</span>}  )}
+<b style={{color:'red'}}>Stock value in Rs. = </b>
+<b style={{color:'red'}}>  {this.state.sum.reduce( (total,num)=>{return total+num}, 0 )  }  </b>
+
+
+
 
 
 </div>
