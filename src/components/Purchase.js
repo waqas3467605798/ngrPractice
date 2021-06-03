@@ -10,6 +10,7 @@ import M from "materialize-css";
           this.state = {
             qty:'',
             date:'',
+            narration:'',
             // age:'',
             // message:'',
             objects:[],
@@ -84,6 +85,8 @@ partyLedgerObj.date = this.state.date;
 partyLedgerObj.debit = reqObj.costPrice*Number(this.state.qty)
 partyLedgerObj.itemName = reqObj.itemName
 partyLedgerObj.perUnitCost = reqObj.costPrice
+var nrr = this.state.narration
+partyLedgerObj.narration = nrr
 
 
 
@@ -128,7 +131,7 @@ if('ledger' in reqPartyObj){
 
 
 alert('Your message successfully saved..!')
-this.setState({qty:'',date:''})
+this.setState({qty:'',date:'',narration:''})
 
 
 }
@@ -167,6 +170,7 @@ this.setState({qty:'',date:''})
     
     <input type='text' value={this.state.qty} name='qty' onChange={this.changeHandler} placeholder='Quantity'/> <br/>
     <input type='text' value={this.state.date} name='date' onChange={this.changeHandler} placeholder='Purchase Date (01-Jan-2021)'/> <br/>
+    <input type='text' value={this.state.narration} name='narration' onChange={this.changeHandler} placeholder='Remarks/Narration'/> <br/>
     <button className="waves-effect waves-light btn" onClick={this.saveValue}>Save</button>
 
 

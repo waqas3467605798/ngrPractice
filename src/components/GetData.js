@@ -210,7 +210,11 @@ class partyLedgers extends Component{
       super();
       this.state = {
         objects:[],
-        partyObjects:[]
+        partyObjects:[],
+        sum:[],
+        ledger:[],
+        renderLedgerData:false,
+        status:false
         
       }
   }
@@ -236,7 +240,35 @@ class partyLedgers extends Component{
 
 
   
+getData = ()=>{
+    this.setState({status:true})        //As status true, the render function will run again - because of change in state
+    this.setState({sum:[]})  //As the render method will run again, so the array of sum and sumQty in state should be zero
+  }
 
+
+    partyLedger = ()=> {
+var objIndex = document.getElementById('selected_save4').selectedIndex
+var reqObj = this.state.partyObjects[objIndex]
+
+
+
+if('ledger' in reqObj){
+  var ledgerData = reqObj.ledger;
+  this.setState({ledger: ledgerData, renderLedgerData:true, noData:null})
+ 
+
+ }
+ else{
+   
+   var noDataFound = 'No data found'
+   this.setState({noData: noDataFound, renderLedgerData:false})
+   console.log(noDataFound)
+   
+ }
+
+
+this.setState({sum:[]}) //As the render method will run again, so the array of sum and sumQty in state should be zero
+    }
 
 
 
@@ -247,7 +279,39 @@ return (
 
 <div>
 
-<button onClick={this.stockReport}>Part Ledger</button>
+<button className="waves-effect waves-light btn" onClick={this.getData} style={{width:'30%'}}>Select Party</button> <br/>
+<div className='selectWidth'> <select className='browser-default' id='selected_save4'>  {this.state.partyObjects.map(  (item,i)=>{ return <option key={i} className='browser-default'>{item.partyName}</option>}  )}   </select> </div> <br/>
+<button className="waves-effect waves-light btn" onClick={this.partyLedger} style={{width:'30%'}}>Get Data</button> <br/>
+
+
+{/* in case of purchase data found */}
+<div className={this.state.renderLedgerData === true ? '' : 'display'}>
+
+<table><thead><tr><th>Date</th><th>Remarks</th><th>Amount</th></tr></thead><tbody>{this.state.ledger.map(  (item,index)=>{return <tr key={index}><td>{item.date}</td><td>{`${item.itemName} Qty: ${item.qty} @ ${item.perUnitCost}  ${item.narration}`}</td><td>{item.debit}</td></tr>})}</tbody></table>
+
+{/* sum of Quantity of item */}
+
+{this.state.ledger.map(  (itm,indx)=>{ return <span key={indx} style={{color:'white'}}>{this.state.sum.push(itm.debit)}</span>}  )}
+<b style={{color:'red'}}>Closing Balance = </b>
+<b style={{color:'red'}}>  {this.state.sum.reduce( (total,num)=>{return total+num}, 0 )  }  </b>
+
+
+
+</div>
+
+
+{/* in case of no data found of purchases */}
+<div className={this.state.noData === null ? 'display' : ''}>
+     <h4>
+        {this.state.noData}
+     </h4>
+     
+</div>
+
+
+
+
+
 
 </div>
 );
