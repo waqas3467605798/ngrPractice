@@ -32,13 +32,10 @@ this.setState({
 saveItem = ()=> {
   let obj = {};
   obj.itemName = this.state.itemName;
-  obj.costPrice = Number(this.state.costPrice);
-  // obj.age = this.state.age;
-
+  // obj.costPrice = Number(this.state.costPrice);     Commented Now
   
-  // Temporily coment
-  // var msg = ['below are your messages'];
-  // obj.msg = msg;
+
+
   var key = firebase.database().ref('itemList').push().key
   obj.key = key
   firebase.database().ref('itemList').child(key).set(obj)
@@ -97,7 +94,7 @@ saveParty = ()=> {
     <br/><br/><br/>
     <h2 className='headings'>Add Item Name</h2>
     <input type='text'  value={this.state.itemName} name='itemName' onChange={this.changeHandler} placeholder='Add Your Item Name with Brand' />  <br/>
-    <input type='text' value={this.state.costPrice} name='costPrice' onChange={this.changeHandler} placeholder='cost Price' /> <br/>
+    {/* <input type='text' value={this.state.costPrice} name='costPrice' onChange={this.changeHandler} placeholder='cost Price' /> <br/>    Commented Now */}
     {/* <input type='text' value={this.state.age} name='age' onChange={this.changeHandler} placeholder='Age' /><br/>  */}
     {/* <button onClick={this.save}>Save</button> */}
     <button className="waves-effect waves-dark btn" onClick={this.saveItem}>Save</button>

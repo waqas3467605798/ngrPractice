@@ -82,7 +82,7 @@ var reqPartyObj = this.state.partyObjects[partyObjIndex]
 var partyLedgerObj = {}
 partyLedgerObj.qty = Number(this.state.qty);
 partyLedgerObj.date = this.state.date;
-partyLedgerObj.debit = -(this.state.costPrice*Number(this.state.qty))
+partyLedgerObj.debit = (this.state.costPrice*Number(this.state.qty))
 partyLedgerObj.itemName = reqObj.itemName
 partyLedgerObj.perUnitCost = this.state.costPrice
 
@@ -167,7 +167,7 @@ this.setState({qty:'',date:''})
     
     
     <input type='text' value={this.state.qty} name='qty' onChange={this.changeHandler} placeholder='Quantity'/> <br/>
-    <input type='text' value={this.state.costPrice} name='costPrice' onChange={this.changeHandler} placeholder='costPrice per Unit'/> <br/>
+    <input type='text' value={this.state.costPrice} name='costPrice' onChange={this.changeHandler} placeholder='Price per Unit'/> <br/>
     <input type='text' value={this.state.date} name='date' onChange={this.changeHandler} placeholder='Date (01-Jan-2021)'/> <br/>
     <button className="waves-effect waves-light btn" onClick={this.saveValue}>Save</button>
 

@@ -11,6 +11,7 @@ import M from "materialize-css";
             qty:'',
             date:'',
             narration:'',
+            price:'',
             // age:'',
             // message:'',
             objects:[],
@@ -67,13 +68,14 @@ saveValue = ()=>{
 
 var obj = {}
 obj.qty = Number(this.state.qty);
+obj.costPrice = Number(this.state.price);
 obj.date = this.state.date;
 var itemObjIndex = document.getElementById('selected_save1').selectedIndex
 var reqObj = this.state.objects[itemObjIndex]
 obj.totalBill = reqObj.costPrice*Number(this.state.qty)     //multiplying by qty and price and saved in object with a property name of 'totolBill'
 var party = document.getElementById('selected_save2').value
 obj.partyName = party
-obj.costPrice = reqObj.costPrice
+// obj.costPrice = reqObj.costPrice
 
 
 
@@ -82,9 +84,9 @@ var reqPartyObj = this.state.partyObjects[partyObjIndex]
 var partyLedgerObj = {}
 partyLedgerObj.qty = Number(this.state.qty);
 partyLedgerObj.date = this.state.date;
-partyLedgerObj.debit = reqObj.costPrice*Number(this.state.qty)
+partyLedgerObj.debit = -Number(this.state.price)*Number(this.state.qty)
 partyLedgerObj.itemName = reqObj.itemName
-partyLedgerObj.perUnitCost = reqObj.costPrice
+partyLedgerObj.perUnitCost = Number(this.state.price)
 var nrr = this.state.narration
 partyLedgerObj.narration = nrr
 
@@ -169,7 +171,8 @@ this.setState({qty:'',date:'',narration:''})
     
     
     <input type='text' value={this.state.qty} name='qty' onChange={this.changeHandler} placeholder='Quantity'/> <br/>
-    <input type='text' value={this.state.date} name='date' onChange={this.changeHandler} placeholder='Purchase Date (01-Jan-2021)'/> <br/>
+    <input type='text' value={this.state.price} name='price' onChange={this.changeHandler} placeholder='Price Per Unit'/> <br/>     
+    <input type='text' value={this.state.date} name='date' onChange={this.changeHandler} placeholder='Date (01-Jan-2021)'/> <br/>
     <input type='text' value={this.state.narration} name='narration' onChange={this.changeHandler} placeholder='Remarks/Narration'/> <br/>
     <button className="waves-effect waves-light btn" onClick={this.saveValue}>Save</button>
 
