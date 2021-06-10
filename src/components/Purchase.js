@@ -72,7 +72,7 @@ obj.costPrice = Number(this.state.price);
 obj.date = this.state.date;
 var itemObjIndex = document.getElementById('selected_save1').selectedIndex
 var reqObj = this.state.objects[itemObjIndex]
-obj.totalBill = reqObj.costPrice*Number(this.state.qty)     //multiplying by qty and price and saved in object with a property name of 'totolBill'
+obj.totalBill = Number(this.state.price)*Number(this.state.qty)     //multiplying by qty and price and saved in object with a property name of 'totolBill'
 var party = document.getElementById('selected_save2').value
 obj.partyName = party
 // obj.costPrice = reqObj.costPrice
@@ -133,7 +133,7 @@ if('ledger' in reqPartyObj){
 
 
 alert('Your message successfully saved..!')
-this.setState({qty:'',date:'',narration:''})
+this.setState({qty:'',date:'',narration:'',price:''})
 
 
 }
